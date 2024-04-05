@@ -21,18 +21,18 @@ class AppleIphonesSection(fai, CartMenu):
         super().__init__(driver)
         self.driver = driver
 
+        # Locators
+
+        self.set_filters_btn = (By.XPATH, "//button[@id='set_filter']")
+        self.flying_results_wrap = (By.XPATH, "//button[@class='btn-show-results']")
+        self.product_to_cart = (By.XPATH, "//button[@id='bx_3966226736_blocks-88154_buy_link']")
+        # Если появился такой элемент (с классом forced), то это одна из успешных проверок на добавление в корзину
+        self.msg_after_adding_to_cart = (By.XPATH, "//button[contains(@class, 'forced')]/span[@class='text in-cart']")
+        self.text_in_cart_already_in_cart = (By.XPATH, "//button[@data-product-id='88154']/span[@class='text in-cart']")
+        self.product_price_on_page = (By.XPATH, "//span[@id='bx_3966226736_blocks-88154_price']/span[@class='value']")
+        self.product_name_on_page = (By.XPATH, "//*[@id='bx_3966226736_blocks-88154']//a/span")
+
     target_value_price_filter = 100000
-
-    # Locators
-
-    set_filters_btn = "//button[@id='set_filter']"
-    flying_results_wrap = "//button[@class='btn-show-results']"
-    product_to_cart = "//button[@id='bx_3966226736_blocks-88154_buy_link']"
-    # Если появился такой элемент (с классом forced), то это одна из успешных проверок на добавление в корзину
-    msg_after_adding_to_cart = "//button[contains(@class, 'forced')]/span[@class='text in-cart']"
-    text_in_cart_already_in_cart = "//button[@data-product-id='88154']/span[@class='text in-cart']"
-    product_price_on_page = "//span[@id='bx_3966226736_blocks-88154_price']/span[@class='value']"
-    product_name_on_page = "//*[@id='bx_3966226736_blocks-88154']//a/span"
 
     # Getters
 

@@ -12,33 +12,34 @@ class CartPage(Base):
         super().__init__(driver)
         self.driver = driver
 
-    # Locators
+        # Locators
 
-    product_price = "//span[@id='basket-item-price-1611309']"
-    product_name = "//tr[@id='basket-item-1611309']//a/span[@data-entity='basket-item-name']"
-    total_price_of_1_product = "//span[@id='basket-item-sum-price-1611309']"
-    total_price = "//div[@data-entity='basket-total-price']"
-    create_order_btn = "//button[@data-entity='basket-checkout-button']"
-    all_products_total_price_of_1_item = ("(//td[@class='basket-items-list-item-price']//"
-                                          "span[@class='basket-item-price-current-text'])")
+        self.product_price = (By.XPATH, "//span[@id='basket-item-price-1611309']")
+        self.product_name = (By.XPATH, "//tr[@id='basket-item-1611309']//a/span[@data-entity='basket-item-name']")
+        self.total_price_of_1_product = (By.XPATH, "//span[@id='basket-item-sum-price-1611309']")
+        self.total_price = (By.XPATH, "//div[@data-entity='basket-total-price']")
+        self.create_order_btn = (By.XPATH, "//button[@data-entity='basket-checkout-button']")
+        self.all_products_total_price_of_1_item = (By.XPATH,
+                                                   "(//td[@class='basket-items-list-item-price']//"
+                                                   "span[@class='basket-item-price-current-text'])")
 
     # Getters
 
     def get_product_price(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.product_price)))
+        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.product_price))
 
     def get_product_name(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.product_name)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.product_name))
 
     def get_total_price_of_1_product(self):
         return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located
-                                                    ((By.XPATH, self.total_price_of_1_product)))
+                                                    (self.total_price_of_1_product))
 
     def get_total_price(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.total_price)))
+        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.total_price))
 
     def get_create_order_btn(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.create_order_btn)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.create_order_btn))
 
     # Actions
 

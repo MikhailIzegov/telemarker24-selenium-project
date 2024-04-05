@@ -12,35 +12,35 @@ class CartMenu(Base):
         super().__init__(driver)
         self.driver = driver
 
-    # Locators
+        # Locators
 
-    cart_icon_header = "//span[@class='icon_cart']"
-    product_price = "//tr[@data-product-id='88154']//span[@class='value']"
-    product_name = "//tr[@data-product-id='88154']//a/span[@class='text']"
-    total_sum = "//span[@class='total']//span[@class='value']"
-    create_order_btn = "//a[contains(@class, 'btn-main')]//span[@class='text']"
-    all_products_in_cart_menu = "(//tr//span[@class='value'])"
-    cart_page_title = "//h1[contains( text(), 'Корзина')]"
+        self.cart_icon_header = (By.XPATH, "//span[@class='icon_cart']")
+        self.product_price = (By.XPATH, "//tr[@data-product-id='88154']//span[@class='value']")
+        self.product_name = (By.XPATH, "//tr[@data-product-id='88154']//a/span[@class='text']")
+        self.total_sum = (By.XPATH, "//span[@class='total']//span[@class='value']")
+        self.create_order_btn = (By.XPATH, "//a[contains(@class, 'btn-main')]//span[@class='text']")
+        self.all_products_in_cart_menu = (By.XPATH, "(//tr//span[@class='value'])")
+        self.cart_page_title = (By.XPATH, "//h1[contains( text(), 'Корзина')]")
 
     # Getters
 
     def get_cart_icon_header(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.cart_icon_header)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.cart_icon_header))
 
     def get_product_price_in_cart_menu(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.product_price)))
+        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.product_price))
 
     def get_product_name_in_cart_menu(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.product_name)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.product_name))
 
     def get_total_sum(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.total_sum)))
+        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.total_sum))
 
     def get_create_order_btn(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.create_order_btn)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.create_order_btn))
 
     def get_cart_page_title(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.cart_page_title)))
+        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.cart_page_title))
 
     # Actions
 
