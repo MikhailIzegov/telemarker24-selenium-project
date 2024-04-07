@@ -1,21 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from base.base_class import Base
-from model.application import app
-from model.pages.cart_menu import CartMenu
-from model.pages.cart_page import CartPage
-from model.pages.main_page import MainPage
+from model.application import Application
+from model.components.authorization import Authorization
 
 
-def test_buy_product(conf_driver):
-    driver = conf_driver
+def test_buy_product(browser):
     print("Start test 1")
 
-    driver.get('https://telemarket24.ru/')
-    driver.maximize_window()
+    app = Application(browser)
+    app.open('https://telemarket24.ru/')
 
+    logging_in = Authorization(browser)
+    logging_in.authorization()
 
-    # app.auth.authorization()
+    #
+    # mp = MainPage(init_driver)
+
     #
     # logging_in = Base(driver)
     # logging_in.authorization()

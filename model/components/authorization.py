@@ -2,43 +2,41 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from model.application import Application
 
-class Authorization():
-    def __init__(self, driver):
-        self.driver = driver
 
-    # Locators
+class Authorization(Application):
 
-    icon_to_login = "//span[@class='pseudolink']"
-    btn_to_login_form = ".pseudolink_box > [data-target='#modal_login']"
-    email_field = "//input[@name='USER_LOGIN']"
-    password_field = "//input[@name='USER_PASSWORD']"
-    checkbox_remember_me = "//div[@id='USER_REMEMBER_frm-styler']"
-    login_btn = "//button[contains(@class, 'btn-submit')]/span[text()='Вход в личный кабинет']"
-    my_account_btn = "//a[@href='/personal/']/span[text()='Мой кабинет']"
+    icon_to_login = (By.XPATH, "//span[@class='pseudolink']")
+    btn_to_login_form = (By.CSS_SELECTOR, ".pseudolink_box > [data-target='#modal_login']")
+    email_field = (By.XPATH, "//input[@name='USER_LOGIN']")
+    password_field = (By.XPATH, "//input[@name='USER_PASSWORD']")
+    checkbox_remember_me = (By.XPATH, "//div[@id='USER_REMEMBER_frm-styler']")
+    login_btn = (By.XPATH, "//button[contains(@class, 'btn-submit')]/span[text()='Вход в личный кабинет']")
+    my_account_btn = (By.XPATH, "//a[@href='/personal/']/span[text()='Мой кабинет']")
 
     # Getters
 
     def get_icon_to_login(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.icon_to_login)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(Authorization.icon_to_login))
 
     def get_btn_to_login_form(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, self.btn_to_login_form)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(Authorization.btn_to_login_form))
 
     def get_email_field(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.email_field)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.email_field))
 
     def get_password_field(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.password_field)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.password_field))
 
     def get_checkbox_remember_me(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.checkbox_remember_me)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.checkbox_remember_me))
 
     def get_login_btn(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.login_btn)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.login_btn))
 
     def get_my_account_btn(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.my_account_btn)))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.my_account_btn))
 
     # Actions
 
@@ -66,7 +64,7 @@ class Authorization():
     def check_logged_in(self):
         self.click_icon_to_login()
         assert self.get_my_account_btn().is_displayed()
-        self.driver.refresh()  # Чтобы убрать открывшийся список
+        self.browser.refresh()  # Чтобы убрать открывшийся список
 
     # Methods
 
@@ -83,3 +81,4 @@ class Authorization():
         self.remember_me_not()
         self.click_login_btn()
         self.check_logged_in()
+

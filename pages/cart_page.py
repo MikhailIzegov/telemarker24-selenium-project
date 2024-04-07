@@ -2,7 +2,7 @@ from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from model.pages.apple_iphones import AppleIphonesSection as ai
+from pages.apple_iphones import AppleIphonesSection as ai
 
 from base.base_class import Base
 

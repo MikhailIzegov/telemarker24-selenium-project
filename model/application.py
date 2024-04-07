@@ -1,23 +1,52 @@
-from model.components.authorization import Authorization
-from model.pages.apple_iphones import AppleIphonesSection
-from model.pages.cart_menu import CartMenu
-from model.pages.cart_page import CartPage
-from model.pages.main_page import MainPage
-from tests.conftest import conf_driver
+from datetime import datetime
+
+from selenium.webdriver import ActionChains
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class Application:
-    def __init__(self, driver):
-        self.driver = driver
-        self.auth = Authorization(driver)
-        self.main_page = MainPage(driver)
-        self.cart_page = CartPage(driver)
-        self.cart_menu = CartMenu(driver)
-        self.ais = AppleIphonesSection(driver)
+    def __init__(self, browser):
+        self.browser = browser
 
-    @property
-    def open(self, link):
-        return self.driver.get(link)
+    def open(self, url):
+        self.browser.get(url)
+
+    """Method get current URL"""
+    def get_current_url(self):
+        get_url = self.browser.current_url
+        print("Current url ", get_url)
+
+    """Method assert text"""
+    def assert_text(self, text, result):
+        value_text = text.text
+        assert value_text == result
+        print("Good value text")
+
+    """Method screenshot"""
+    def get_screenshot(self):
+        current_date = datetime.now().strftime("%Y.%m.%d %H.%M.%S")
+        name_screenshot = 'screenshot' + current_date + '.png'
+        self.browser.save_screenshot(
+            'C:\\Users\\Михаил Сергеевич\\PycharmProjects\\AutoProject\\screen\\' + name_screenshot)
+
+    """Method assert url"""
+    def assert_url(self, result):
+        get_url = self.browser.current_url
+        assert get_url == result
+        print("Good value URL")
+
+    """Method scroll to element"""
+    def scroll_to_element(self, element):
+        action = ActionChains(self.browser)
+        action.move_to_element(element).perform()
+
+    """Method is element located on a page"""
+    def is_located(self, element):
+        WebDriverWait(self.browser, 10).until(EC.visibility_of(element))
+
+    """Method get text from element"""
+    def text_from_element(self, element):
+        return (WebDriverWait(self.browser, 10).until(EC.visibility_of(element))).text
 
 
-app = Application(conf_driver)

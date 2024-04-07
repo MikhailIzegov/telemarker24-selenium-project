@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from model.pages.cart_menu import CartMenu
+from pages.cart_menu import CartMenu
 from sections.filters_apple_iphones import FiltersAppleIphones as fai
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import NoSuchElementException
