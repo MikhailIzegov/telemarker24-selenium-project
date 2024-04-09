@@ -14,11 +14,13 @@ load_env()
 class User:
     email: str
     password: str
+    budget_from_filter: int
 
 
 test_user = User(
         email=os.getenv('LOGIN_USER'),
-        password=os.getenv('PASSWORD_USER')
+        password=os.getenv('PASSWORD_USER'),
+        budget_from_filter=100000
         )
 
 # class TestData():

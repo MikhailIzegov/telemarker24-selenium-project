@@ -8,12 +8,16 @@ from model.application import Application
 
 class MainPage(Application):
 
-    # Locators
+    def __init__(self, browser):
+        super().__init__(browser)
+        self.browser = browser
 
-    burger_menu = (By.XPATH, "//div[@class='kat_btn']")
-    smartphones_section = (By.XPATH, "//span[@class='category-name' and text()='Телефоны и смартфоны']")
-    apple_iphone_section = (By.XPATH, "//span[@class='text' and text()='Apple iPhone']")
-    title_apple_iphone_section = (By.XPATH, "//h1[contains(text(), 'Смартфоны Apple iPhone')]")
+        # Locators
+
+        self.burger_menu = (By.XPATH, "//div[@class='kat_btn']")
+        self.smartphones_section = (By.XPATH, "//span[@class='category-name' and text()='Телефоны и смартфоны']")
+        self.apple_iphone_section = (By.XPATH, "//span[@class='text' and text()='Apple iPhone']")
+        self.title_apple_iphone_section = (By.XPATH, "//h1[contains(text(), 'Смартфоны Apple iPhone')]")
 
     # Getters
 
