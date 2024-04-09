@@ -26,9 +26,9 @@ def test_buy_product(browser):
 
     ai.compare_name_on_page_and_in_cart_menu()
     ai.compare_price_on_page_and_in_cart_menu()
-    #
-    # cm.check_total_and_create_order()
-    #
+
+    cm.check_total_and_create_order()
+
     # cp = CartPage(browser)
     # cp.check_name_and_total_and_create_order()
     print("Конец")

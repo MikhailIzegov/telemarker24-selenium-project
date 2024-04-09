@@ -8,8 +8,8 @@ from model.application import Application
 
 # Не page, а menu - оно открывается по клику из футера, page - тоже есть, но это отдельный модуль
 class CartMenu(Application):
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, browser):
+        self.browser = browser
 
         # Locators
 
@@ -21,25 +21,34 @@ class CartMenu(Application):
         self.all_products_in_cart_menu = (By.XPATH, "(//tr//span[@class='value'])")
         self.cart_page_title = (By.XPATH, "//h1[contains( text(), 'Корзина')]")
 
+        self.price_of_each_product_in_cart_menu = (By.CSS_SELECTOR, ".price-new > .value")
+        self.quantity_of_items = (By.CSS_SELECTOR, "[name='quantity']")
+
     # Getters
 
     def get_cart_icon_header(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.cart_icon_header))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.cart_icon_header))
 
     def get_product_price_in_cart_menu(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.product_price))
+        return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located(self.product_price))
 
     def get_product_name_in_cart_menu(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.product_name))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.product_name))
 
     def get_total_sum(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.total_sum))
+        return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located(self.total_sum))
 
     def get_create_order_btn(self):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(self.create_order_btn))
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.create_order_btn))
 
     def get_cart_page_title(self):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.cart_page_title))
+        return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located(self.cart_page_title))
+
+    def get_price_of_each_product_in_cart_menu(self):
+        return WebDriverWait(self.browser, 30).until(EC.presence_of_all_elements_located(self.price_of_each_product_in_cart_menu))
+
+    def get_quantity_of_items(self):
+        return WebDriverWait(self.browser, 30).until(EC.presence_of_all_elements_located(self.quantity_of_items))
 
     # Actions
 
@@ -54,27 +63,16 @@ class CartMenu(Application):
 
     # Эта функция не учитывает разное кол-во одного и того же товара! - исправить
     def compare_total_with_selected_products(self):
-        locator_index = 1
         summed_price = 0
-        while True:
-            try:
-                # Формируем локатор элемента в корзине
-                locator = f"{self.all_products_in_cart_menu}[{locator_index}]"
-                print(locator)
-                # Записываем локатор в такую переменную, чтобы это был объект класса WebElement, иначе выдавал ошибку!
-                loc = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, locator)))
-                print(type(loc))
-                # Убираем пробел, конвертим в int, чтобы сложить и проверить total
-                price_in_cart_text = self.text_from_element(loc).replace(" ", "")
-                print(price_in_cart_text)
-                price_in_cart_numeric = int(price_in_cart_text)
-                summed_price += price_in_cart_numeric
-                locator_index += 1
-                print(locator_index)
-            # Если NoSuchElementException или TimeoutException возникает, значит мы достигли конца корзины
-            except (NoSuchElementException, TimeoutException):
-                print("End of cart items.")
-                break
+
+        # price_of_each_product_in_cart_menu = self.browser.find_elements(By.CSS_SELECTOR, ".price-new > .value")
+        price_of_each_product_in_cart_menu = self.get_price_of_each_product_in_cart_menu()
+        quantity_of = self.get_quantity_of_items()
+        for index in range(len(price_of_each_product_in_cart_menu)):
+            numeric_price = int(self.text_from_element(price_of_each_product_in_cart_menu[index]).replace(" ", ""))
+            multiplier = int(quantity_of[index].get_attribute('value'))
+            total_of_item = numeric_price * multiplier
+            summed_price += total_of_item
 
         ts = self.get_total_sum()
         total_price_text = self.text_from_element(ts).replace(" ", "")
