@@ -1,6 +1,3 @@
-import time
-
-from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -48,7 +45,8 @@ class CartMenu(Application):
         return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located(self.cart_page_title))
 
     def get_price_of_each_product_in_cart_menu(self):
-        return WebDriverWait(self.browser, 30).until(EC.presence_of_all_elements_located(self.price_of_each_product_in_cart_menu))
+        return WebDriverWait(self.browser, 30).until(EC.presence_of_all_elements_located
+                                                     (self.price_of_each_product_in_cart_menu))
 
     def get_quantity_of_items(self):
         return WebDriverWait(self.browser, 30).until(EC.presence_of_all_elements_located(self.quantity_of_items))
@@ -70,7 +68,6 @@ class CartMenu(Application):
     def compare_total_with_selected_products(self):
         summed_price = 0
 
-        # price_of_each_product_in_cart_menu = self.browser.find_elements(By.CSS_SELECTOR, ".price-new > .value")
         price_of_each_product_in_cart_menu = self.get_price_of_each_product_in_cart_menu()
         quantity_of = self.get_quantity_of_items()
         for index in range(len(price_of_each_product_in_cart_menu)):
@@ -83,7 +80,6 @@ class CartMenu(Application):
         total_price_text = self.text_from_element(ts).replace(" ", "")
         total_price_numeric = int(total_price_text)
         assert summed_price == total_price_numeric, "Итоговая сумма не равна сумме товаров в корзине"
-        print("Итоговая сумма равна сумме товаров в корзине")
 
     def click_create_order_btn(self):
         self.get_create_order_btn().click()
@@ -94,7 +90,6 @@ class CartMenu(Application):
     # Methods
 
     def check_total_and_create_order(self):
-        time.sleep(3)
         self.compare_total_with_selected_products()
         self.click_create_order_btn()
         self.is_cart_page()
