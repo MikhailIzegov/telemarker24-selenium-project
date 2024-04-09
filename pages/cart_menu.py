@@ -13,7 +13,7 @@ class CartMenu(Application):
 
         # Locators
 
-        self.cart_icon_header = (By.XPATH, "//span[@class='icon_cart']")
+        self.cart_icon_header = (By.CSS_SELECTOR, "#basket")
         self.product_price = (By.XPATH, "//tr[@data-product-id='88155']//span[@class='value']")
         self.product_name = (By.XPATH, "//tr[@data-product-id='88155']//a/span[@class='text']")
         self.total_sum = (By.XPATH, "//span[@class='total']//span[@class='value']")
