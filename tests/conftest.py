@@ -13,7 +13,7 @@ def load_env():
 
 
 @pytest.fixture(scope="function", autouse=True)
-def setup_browser(load_env):
+def browser(load_env):
     options = Options()
     options.add_argument('--start-maximized')
     selenoid_capabilities = {
