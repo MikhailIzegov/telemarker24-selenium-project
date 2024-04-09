@@ -6,9 +6,11 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class Application:
+
+    shared_data = {}  # Словарь для хранения общих данных между страницами (должен быть статическим атрибутом!)
+
     def __init__(self, browser):
         self.browser = browser
-        self.shared_data = {}  # Словарь для хранения общих данных между страницами
 
     def open(self, url):
         self.browser.get(url)
@@ -64,7 +66,8 @@ class Application:
 
     """Method get text from element"""
     def text_from_element(self, element):
-        return (WebDriverWait(self.browser, 10).until(EC.visibility_of(element))).text
+        result = (WebDriverWait(self.browser, 10).until(EC.visibility_of(element))).text
+        return result
 
     def first_element(self, elements_locator):
         try:

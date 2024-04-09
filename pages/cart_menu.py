@@ -1,3 +1,5 @@
+import time
+
 from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -9,6 +11,7 @@ from model.application import Application
 # Не page, а menu - оно открывается по клику из футера, page - тоже есть, но это отдельный модуль
 class CartMenu(Application):
     def __init__(self, browser):
+        super().__init__(browser)
         self.browser = browser
 
         # Locators
@@ -53,10 +56,12 @@ class CartMenu(Application):
     # Actions
 
     def save_product_name_in_cart_menu(self):
-        self.set_data('product_name_in_cart_menu', self.text_from_element(self.get_product_name_in_cart_menu))
+        product_name_in_cart_menu = self.get_product_name_in_cart_menu()
+        self.set_data('product_name_in_cart_menu', self.text_from_element(product_name_in_cart_menu))
 
     def save_product_price_in_cart_menu(self):
-        self.set_data('product_price_in_cart_menu', self.text_from_element(self.get_product_price_in_cart_menu))
+        product_price_in_cart_menu = self.get_product_price_in_cart_menu()
+        self.set_data('product_price_in_cart_menu', self.text_from_element(product_price_in_cart_menu))
 
     def click_cart_icon_header(self):
         self.get_cart_icon_header().click()
@@ -89,6 +94,7 @@ class CartMenu(Application):
     # Methods
 
     def check_total_and_create_order(self):
+        time.sleep(3)
         self.compare_total_with_selected_products()
         self.click_create_order_btn()
         self.is_cart_page()

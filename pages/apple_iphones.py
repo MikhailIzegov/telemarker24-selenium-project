@@ -55,7 +55,7 @@ class AppleIphonesSection(Application):  # Было: fai, CartMenu
                 .until(EC.element_to_be_clickable(self.msg_after_adding_to_cart)))
 
     def get_product_name_on_page(self):
-        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.product_name_on_page))
+        return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located(self.product_name_on_page))
 
     def get_product_price_on_page(self):
         return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located
@@ -71,6 +71,18 @@ class AppleIphonesSection(Application):  # Было: fai, CartMenu
     #     (self.driver.execute_script
     #      ("arguments[0].textContent = arguments[1];",
     #       self.get_current_value_price_filter_pull(), self.target_value_price_filter))
+
+    def save_product_name_on_page(self):
+        product_name_on_page = self.get_product_name_on_page()
+        self.set_data('product_name_on_page', self.text_from_element(product_name_on_page))
+        print(self.get_data('product_name_on_page'))
+
+    def save_product_price_on_page(self):
+        product_price_on_page = self.get_product_price_on_page()
+        product_price_on_page_text = self.text_from_element(product_price_on_page)
+        product_price_on_page_text = product_price_on_page_text.replace(" ", "")
+        self.set_data('product_price_on_page', product_price_on_page_text)
+        print(self.get_data('product_price_on_page'))
 
     def delete_space_for_conversion(self):
         price_value_with_space = self.get_current_value_price_filter_pull().text
@@ -114,6 +126,8 @@ class AppleIphonesSection(Application):  # Было: fai, CartMenu
         time.sleep(2)
         self.click_set_filters_btn()
         time.sleep(3)
+        self.save_product_name_on_page()
+        self.save_product_price_on_page()
         self.add_product_to_cart()
         # Одна из проверок, что мы добавили в корзину
         self.is_located(self.get_msg_after_adding_to_cart())
