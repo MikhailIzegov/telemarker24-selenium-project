@@ -1,3 +1,5 @@
+import time
+
 from model.application import Application
 from model.components.authorization import Authorization
 from pages.apple_iphones import AppleIphonesSection
@@ -33,4 +35,7 @@ def test_buy_product(browser):
 
     cp = CartPage(browser)
     cp.check_name_and_total_and_create_order()
-    print("Конец")
+
+    cp.remove_from_cart()
+    browser.delete_all_cookies()
+    browser.refresh()

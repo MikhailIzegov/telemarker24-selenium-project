@@ -1,4 +1,5 @@
 from selenium.common import NoSuchElementException, TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -21,6 +22,7 @@ class CartPage(Application):
         self.create_order_btn = (By.XPATH, "//button[@data-entity='basket-checkout-button']")
         self.all_products_total_price_of_1_item = (By.XPATH, "(//td[@class='basket-items-list-item-price']//"
                                                              "span[@class='basket-item-price-current-text'])")
+        self.remove_from_cart_btn = (By.CSS_SELECTOR, ".basket-item-block-actions > [data-entity='basket-item-delete']")
 
     # Getters
 
@@ -39,6 +41,9 @@ class CartPage(Application):
 
     def get_create_order_btn(self):
         return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.create_order_btn))
+
+    def get_remove_from_cart_btn(self):
+        return WebDriverWait(self.browser, 30).until(EC.element_to_be_clickable(self.remove_from_cart_btn))
 
     # Actions
 
@@ -89,6 +94,11 @@ class CartPage(Application):
             total_price_numeric = int(total_price_text)
             assert summed_price == total_price_numeric, "Итоговая сумма не равна сумме товаров в корзине"
             print("Итоговая сумма равна сумме товаров в корзине")
+
+    def remove_from_cart(self):
+        action = ActionChains(self.browser)
+        action.move_to_element(self.get_product_name()).perform()
+        self.browser.execute_script("arguments[0].click();", self.get_remove_from_cart_btn())
 
     # Methods
 
