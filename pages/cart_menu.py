@@ -3,18 +3,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from model.application import Application
+
 
 # Не page, а menu - оно открывается по клику из футера, page - тоже есть, но это отдельный модуль
-class CartMenu():
+class CartMenu(Application):
     def __init__(self, driver):
-        super().__init__(driver)
         self.driver = driver
 
         # Locators
 
         self.cart_icon_header = (By.XPATH, "//span[@class='icon_cart']")
-        self.product_price = (By.XPATH, "//tr[@data-product-id='88154']//span[@class='value']")
-        self.product_name = (By.XPATH, "//tr[@data-product-id='88154']//a/span[@class='text']")
+        self.product_price = (By.XPATH, "//tr[@data-product-id='88155']//span[@class='value']")
+        self.product_name = (By.XPATH, "//tr[@data-product-id='88155']//a/span[@class='text']")
         self.total_sum = (By.XPATH, "//span[@class='total']//span[@class='value']")
         self.create_order_btn = (By.XPATH, "//a[contains(@class, 'btn-main')]//span[@class='text']")
         self.all_products_in_cart_menu = (By.XPATH, "(//tr//span[@class='value'])")
@@ -41,6 +42,12 @@ class CartMenu():
         return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(self.cart_page_title))
 
     # Actions
+
+    def save_product_name_in_cart_menu(self):
+        self.set_data('product_name_in_cart_menu', self.text_from_element(self.get_product_name_in_cart_menu))
+
+    def save_product_price_in_cart_menu(self):
+        self.set_data('product_price_in_cart_menu', self.text_from_element(self.get_product_price_in_cart_menu))
 
     def click_cart_icon_header(self):
         self.get_cart_icon_header().click()

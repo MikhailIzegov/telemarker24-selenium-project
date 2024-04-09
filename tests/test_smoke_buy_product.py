@@ -20,12 +20,12 @@ def test_buy_product(browser):
 
     ai = AppleIphonesSection(browser)
     ai.select_product_according_to_filters()
-    #
-    # cm = CartMenu(browser)
-    # cm.click_cart_icon_header()
-    #
-    # ai.compare_name_on_page_and_in_cart_menu()
-    # ai.compare_price_on_page_and_in_cart_menu()
+
+    cm = CartMenu(browser)
+    cm.click_cart_icon_header()
+
+    ai.compare_name_on_page_and_in_cart_menu()
+    ai.compare_price_on_page_and_in_cart_menu()
     #
     # cm.check_total_and_create_order()
     #

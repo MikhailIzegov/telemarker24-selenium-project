@@ -26,9 +26,9 @@ class AppleIphonesSection(Application):  # Было: fai, CartMenu
     all_given_products_cart_btn = (By.XPATH, "//button[contains(@class, 'btn-action buy')]")
     # Если появился такой элемент (с классом forced), то это одна из успешных проверок на добавление в корзину
     msg_after_adding_to_cart = (By.XPATH, "//button[contains(@class, 'forced')]/span[@class='text in-cart']")
-    text_in_cart_already_in_cart = (By.XPATH, "//button[@data-product-id='88154']/span[@class='text in-cart']")
-    product_price_on_page = (By.XPATH, "//span[@id='bx_3966226736_blocks-88154_price']/span[@class='value']")
-    product_name_on_page = (By.XPATH, "//*[@id='bx_3966226736_blocks-88154']//a/span")
+    text_in_cart_already_in_cart = (By.XPATH, "//button[@data-product-id='88155']/span[@class='text in-cart']")
+    product_price_on_page = (By.XPATH, "//span[@id='bx_3966226736_blocks-88155_price']/span[@class='value']")
+    product_name_on_page = (By.XPATH, "//*[@id='bx_3966226736_blocks-88155']//a/span")
 
     target_value_price_filter = 100000
 
@@ -96,10 +96,10 @@ class AppleIphonesSection(Application):  # Было: fai, CartMenu
         self.get_product_to_cart_btn().click()
 
     def compare_price_on_page_and_in_cart_menu(self):
-        self.assert_text(self.get_product_price_on_page(), (self.get_product_price_in_cart_menu()).text)
+        self.assert_text(self.product_price_on_page, (self.get_data('product_price_in_cart_menu')))
 
     def compare_name_on_page_and_in_cart_menu(self):
-        self.assert_text(self.get_product_name_on_page(), (self.get_product_name_in_cart_menu()).text)
+        self.assert_text(self.product_name_on_page, (self.get_data('product_name_in_cart_menu')))
 
     # Methods
 

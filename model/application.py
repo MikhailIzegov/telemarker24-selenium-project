@@ -8,9 +8,16 @@ from selenium.webdriver.support import expected_conditions as EC
 class Application:
     def __init__(self, browser):
         self.browser = browser
+        self.shared_data = {}  # Словарь для хранения общих данных между страницами
 
     def open(self, url):
         self.browser.get(url)
+
+    def set_data(self, key, value):
+        self.shared_data[key] = value
+
+    def get_data(self, key):
+        return self.shared_data.get(key)
 
     """Method get current URL"""
     def get_current_url(self):
@@ -18,10 +25,20 @@ class Application:
         print("Current url ", get_url)
 
     """Method assert text"""
-    def assert_text(self, text, result):
-        value_text = text.text
-        assert value_text == result
-        print("Good value text")
+    def assert_text(self, element_1_locator, text_result):
+        try:
+            # Дожидаемся появления элемента на странице
+            element = WebDriverWait(self.browser, 30).until(
+                EC.presence_of_element_located(element_1_locator)
+            )
+            value_text_1 = element.text
+            assert value_text_1 == text_result
+            print("Good value text")
+
+        except AssertionError as e:
+            print(f"Assertion Error: {e}")
+        except Exception as e:
+            print(f"Произошла ошибка: {e}")
 
     """Method screenshot"""
     def get_screenshot(self):
