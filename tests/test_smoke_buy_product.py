@@ -1,5 +1,3 @@
-import time
-
 from model.application import Application
 from model.components.authorization import Authorization
 from pages.apple_iphones import AppleIphonesSection
@@ -9,8 +7,6 @@ from pages.main_page import MainPage
 
 
 def test_buy_product(browser):
-    print("Start test 1")
-
     app = Application(browser)
     app.open('https://telemarket24.ru/')
 
