@@ -49,4 +49,17 @@ class Application:
     def text_from_element(self, element):
         return (WebDriverWait(self.browser, 10).until(EC.visibility_of(element))).text
 
+    def first_element(self, elements_locator):
+        try:
+            # Ожидаем появления хотя бы одного элемента, соответствующего локатору
+            elements = WebDriverWait(self.browser, 30).until(
+                EC.presence_of_all_elements_located(elements_locator)
+            )
+            # Возвращаем первый элемент, если список не пустой
+            if elements:
+                return elements[0]
+        except Exception as e:
+            print(f"Произошла ошибка при поиске элемента: {e}")
+        return None
+
 

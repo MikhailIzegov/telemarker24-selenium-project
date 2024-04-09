@@ -72,7 +72,7 @@ class Authorization(Application):
     # хэдэре
 
     """Method authorization"""
-    def authorization(self):
+    def authorize(self):
         self.get_current_url()
         self.click_icon_to_login()
         self.click_btn_login_form()

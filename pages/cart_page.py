@@ -4,10 +4,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.apple_iphones import AppleIphonesSection as ai
 
-from base.base_class import Base
 
-
-class CartPage(Base):
+class CartPage():
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
