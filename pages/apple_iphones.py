@@ -54,7 +54,7 @@ class AppleIphonesSection(Application):
 
     def get_msg_after_adding_to_cart(self):
         return (WebDriverWait(self.browser, 30, ignored_exceptions=ignored_exceptions)
-                .until(EC.element_to_be_clickable(self.msg_after_adding_to_cart)))
+                .until(EC.visibility_of_element_located(self.msg_after_adding_to_cart)))
 
     def get_product_name_on_page(self):
         return WebDriverWait(self.browser, 30).until(EC.visibility_of_element_located(self.product_name_on_page))
