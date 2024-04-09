@@ -132,4 +132,4 @@ class AppleIphonesSection(Application):
         self.add_product_to_cart()
         self.is_located(self.get_msg_after_adding_to_cart())
         self.scroll_to_element(self.get_icon_to_login())
-        time.sleep(2)
+        time.sleep(5)
