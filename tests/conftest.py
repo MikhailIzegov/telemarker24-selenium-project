@@ -16,6 +16,7 @@ def load_env():
 def browser(load_env):
     options = Options()
     options.add_argument('--start-maximized')
+    options.add_argument('--headless')
     selenoid_capabilities = {
         'browserName': 'chrome',
         'browserVersion': '100.0',
